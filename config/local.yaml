@@ -1,0 +1,8 @@
+aws_account: '951882055661'
+aws_region: eu-west-1
+
+
+appsyncIotStream:
+   appsync_API:
+     domain: graph-api-local.aquacontrol.ai
+     certificateArn: arn:aws:acm:us-east-1:951882055661:certificate/6911f0c7-d583-4be4-baf6-cc03d771694e

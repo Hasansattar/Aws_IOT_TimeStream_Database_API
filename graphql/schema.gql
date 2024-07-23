@@ -1,0 +1,626 @@
+# ======================================START- QUERY DATA=========================================
+
+type Query @live {
+  getIotData(interval: String!,sensor:String,port: String,zone:String, sensor_name:String,plant:String ,limit:Int): [IotData]
+  getTankAndPressureData(interval: String!):TanksAndPressureData  
+  getFlowWaterProductionAndDistribution:WaterProductionAndDistribution
+
+  getHistoryWaterFlowx04Andx08ProductionAndDistribution(interval: String!,port:String,limit: String):[HistoryWaterFlowx08AndX04]  
+
+  getWaterFlowDistributionX04(interval:String!):WaterFlowDistributionX04
+  getWaterFlowProductionX08(interval:String!):WaterFlowProductionX08
+  
+  getPressureDataForAllSensor(interval: String!,port: String,limit:Int):[PressureDataForAllSensor]
+  getPressureDifferenceWithPortx07Andx05Withx01(interval: String!,port: String,limit:Int):[PressurexBarDifference]
+  getX03Conductivity_mcSpcmAndTemperature_C(interval: String!,limit:Int):[X03Conductivity_mcSpcmAndTemperature_C]
+  getMachineOperationData(interval: String!):MachineOperationData
+  getMachineHistoryOperationData(interval: String!,limit:Int):[MachineHistoryOperationData]
+  getStatusBarX07AndX05(port: String):StatusBar
+  getStatusBarWaterProduction:StatusBarWaterProduction
+  getStatusTankLevelBelow60Percentage:StatusTankLevelBelow60Percentage
+  getTankLevelHistory(date: String!):[TankLevelHistory]
+  getTankLevelHistoryMaxMinAvg(interval: String!,limit:Int):[HistoryTankLevelMaxMinAvg]
+  getTankLevelHistoryMaxMinAvgUsingDate(date: String!):[HistoryTankLevelMaxMinAvg]
+  getStatusPressureIntakex01:StatusPressureIntake
+  getStatusOperation:StatusOperation
+
+
+}
+
+
+
+type HistoryTankLevelMaxMinAvg{
+     time_interval:String,
+     highest_currentTankLevel:String,
+     lowest_currentTankLevel:String,
+     average_currentTankLevel:String
+}
+
+
+type HistoryWaterFlowx08AndX04{
+    time_interval:String,
+    Flow_Lpmin:String
+
+}
+
+
+
+type WaterFlowDistributionX04{
+   time_interval:String,
+   flow_totilizer_x04:String,
+   current_flowLpmin_x04:String,
+   current_totilizer_x04:String
+}
+
+
+type WaterFlowProductionX08{
+   time_interval:String,
+   flow_totilizer_x08:String,
+   current_flowLpmin_x08:String
+   current_totilizer_x08:String
+
+}
+
+
+
+
+
+type StatusOperation{
+         current_Tank_Level:String
+         status_alert:String
+         Flow_Lpmin_x08:String
+
+
+}
+
+type StatusPressureIntake{
+          pressure_bar:String
+          status_alert:String
+
+}
+
+
+
+type TankLevelHistory{
+	
+          currentTankLevel:String
+          time_interval:String
+
+}
+
+type StatusTankLevelBelow60Percentage{
+          current_Tank_Level:String
+          status_alert:String
+
+}
+
+type StatusBarWaterProduction {
+      x04_distribution_water:String
+      x08_production_water:String
+      status_alert:String
+} 
+
+
+
+
+
+type StatusBar {
+      time_interval:String
+      pressure_bar_difference:String
+      status_alert:String
+} 
+
+
+
+
+type MachineOperationData{
+      time_interval:String 
+      Machine1:String 
+      Flow_Lpmin_status:String
+}
+
+type MachineHistoryOperationData{
+      time_interval:String 
+      Machine1:String 
+      Flow_Lpmin_status:String
+      OperatingTime_hours:String
+      TotalOperatingTime_hours:String
+}
+
+
+type X03Conductivity_mcSpcmAndTemperature_C{
+            time_interval:String 
+            Temperature_C:String 
+            Conductivity_mcSpcm:String 
+
+}
+
+type PressureDataForAllSensor{
+      time_interval:String   	
+      Pressure_bar:String
+}
+
+type PressurexBarDifference{
+     time_interval:String
+     pressure_bar_difference:String
+}
+
+
+
+type TanksAndPressureData {
+   interval:String
+   currentTankLevel:String
+   filter1Result:String
+   filter2Result:String
+   distributedWaterx04:String
+   producedWaterx08:String
+   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+type IotData{
+
+  port: String
+  zone: String
+  plant: String            
+  sensor_type: String
+  sensor_name: String
+  measure_name: String
+  time: String
+  Totaliser1_L: String
+  Flow_Lpmin: String
+  Temperature_C: String
+  DeviceStatus: String
+  Flow_Lph: String
+  Totaliser1_m3: String
+  Flow_m3ph: String
+  Flow_mps: String
+  Pressure_MPa: String
+  Pressure_bar: String
+  Conductivity_mcSpcm: String
+  Temperature_F: String
+  currentTankLevel:String
+   filter1Result:String
+   filter2Result:String
+  
+}
+  
+
+
+
+input IotDataInput {
+
+ port: String
+  zone: String
+  plant: String            
+  sensor_type: String
+  sensor_name: String
+  measure_name: String
+  time: String
+  Totaliser1_L: String
+  Flow_Lpmin: String
+  Temperature_C: String
+  DeviceStatus: String
+  Flow_Lph: String
+  Totaliser1_m3: String
+  Flow_m3ph: String
+  Flow_mps: String
+  Pressure_MPa: String
+  Pressure_bar: String
+  Conductivity_mcSpcm: String
+  Temperature_F: String
+  
+}
+
+
+
+
+
+
+# ======================================END- QUERY DATA=========================================
+
+
+# ======================================START- TANK LEVEL PRESSURE FILTERS AND PRODUCTION WATER=========================================
+input UpdateTankAndPressureDataInput {
+   interval:String
+   currentTankLevel:String
+   filter1Result:String
+   filter2Result:String
+   productionWater:String
+   
+}
+
+
+type TankAndPressureData {
+   interval:String
+   currentTankLevel:String
+   filter1Result:String
+   filter2Result:String
+   productionWater:String
+   
+}
+
+# ======================================END- TANK LEVEL PRESSURE FILTERS AND PRODUCTION WATER=========================================
+
+# =======================START- WATER PRODUCTION AND DISTRIBUTION ====================================
+
+type WaterProductionAndDistribution {
+  x04: WaterDistributionX04
+  x08: WaterProductionX08
+}
+
+input WaterProductionAndDistributionInput {
+  x04Input: WaterDistributionX04Input
+  x08Input: WaterProductionX08Input
+}
+
+type WaterDistributionX04 {
+  waterDistributionX04CurrentFlowLpmin: String
+  waterDistributionX04Recent24Hours: String
+  waterDistributionX04Current: String
+  waterDistributionX04PerDay: String
+  waterDistributionX04PerWeek: String
+  waterDistributionX04PerMonth: String
+  waterDistributionX04PerYear: String
+  waterDistributionHistoryX04PerDay:[WaterProductionHistoryPerDayX04]
+  waterDistributionHistoryX04PerWeek:[WaterProductionHistoryPerWeekX04]
+  waterDistributionHistoryX04PerMonth:[WaterProductionHistoryPerMonthX04]
+  waterDistributionHistoryX04PerYear:[WaterProductionHistoryPerYearX04]
+}
+
+type WaterProductionHistoryPerDayX04{
+     time_interval:String
+     Flow_Lpmin_x04_10min:String
+}
+
+type WaterProductionHistoryPerWeekX04{
+     time_interval:String
+     Flow_Lpmin_x04_6hr:String
+}
+type WaterProductionHistoryPerMonthX04{
+     time_interval:String
+     Flow_Lpmin_x04_1day:String
+}
+type WaterProductionHistoryPerYearX04{
+     time_interval:String
+     Flow_Lpmin_x04_1month:String
+}
+
+
+
+type WaterProductionHistoryPerDayX08{
+     time_interval:String
+     Flow_Lpmin_x08_10min:String
+}
+
+type WaterProductionHistoryPerWeekX08{
+     time_interval:String
+     Flow_Lpmin_x08_6hr:String
+}
+
+type WaterProductionHistoryPerMonthX08{
+     time_interval:String
+     Flow_Lpmin_x08_1day:String
+}
+
+type WaterProductionHistoryPerYearX08{
+     time_interval:String
+     Flow_Lpmin_x08_1month:String
+}
+
+
+
+type WaterProductionX08 {
+  waterProductionX08CurrentFlowLpmin:String
+  waterProductionX08Recent24Hours: String
+  waterProductionX08Current: String
+  waterProductionX08PerDay: String
+  waterProductionX08PerWeek: String
+  waterProductionX08PerMonth: String
+  waterProductionX08PerYear: String
+  waterProductionHistoryX08PerDay:[WaterProductionHistoryPerDayX08]
+  waterProductionHistoryX08PerWeek:[WaterProductionHistoryPerWeekX08]
+  waterProductionHistoryX08PerMonth:[WaterProductionHistoryPerMonthX08]
+  waterProductionHistoryX08PerYear:[WaterProductionHistoryPerYearX08]
+ 
+}
+
+
+input WaterDistributionX04Input {
+  waterDistributionX04Recent24Hours: String
+  waterDistributionX04Current: String
+  waterDistributionX04PerDay: String
+  waterDistributionX04PerWeek: String
+  waterDistributionX04PerMonth: String
+  waterDistributionX04PerYear: String
+  waterDistributionHistoryX04PerDay:[WaterProductionHistoryPerDayx04Input]
+  waterDistributionHistoryX04PerWeek:[WaterProductionHistoryPerWeekx04Input]
+  waterDistributionHistoryX04PerMonth:[WaterProductionHistoryPerMonthx04Input]
+   waterDistributionHistoryX04PerYear:[WaterProductionHistoryPerYearx04Input]
+}
+
+input WaterProductionHistoryPerDayx04Input{
+     time_interval:String
+     Flow_Lpmin_x04_10min:String
+}
+
+input WaterProductionHistoryPerWeekx04Input{
+     time_interval:String
+     Flow_Lpmin_x04_6hr:String
+}
+
+input WaterProductionHistoryPerMonthx04Input{
+     time_interval:String
+     Flow_Lpmin_x04_1day:String
+}
+
+input WaterProductionHistoryPerYearx04Input{
+     time_interval:String
+     Flow_Lpmin_x04_1month:String
+}
+
+
+
+
+
+
+input WaterProductionHistoryPerDayx08Input{
+     time_interval:String
+     Flow_Lpmin_x08_10min:String
+}
+
+
+input WaterProductionHistoryPerWeekx08Input{
+     time_interval:String
+     Flow_Lpmin_x08_6hr:String
+}
+
+
+input WaterProductionHistoryPerMonthx08Input{
+     time_interval:String
+     Flow_Lpmin_x08_1day:String
+}
+
+
+input WaterProductionHistoryPerYearx08Input{
+     time_interval:String
+     Flow_Lpmin_x08_1month:String
+}
+
+
+
+
+
+input WaterProductionX08Input {
+  waterProductionX08Recent24Hours: String
+  waterProductionX08Current: String
+  waterProductionX08PerDay: String
+  waterProductionX08PerWeek: String
+  waterProductionX08PerMonth: String
+  waterProductionX08PerYear: String
+  waterProductionHistoryX08PerDay:[WaterProductionHistoryPerDayx08Input]
+  waterProductionHistoryX08PerWeek:[WaterProductionHistoryPerWeekx08Input]
+  waterProductionHistoryX08PerMonth:[WaterProductionHistoryPerMonthx08Input]
+  waterProductionHistoryX08PerYear:[WaterProductionHistoryPerYearx08Input]
+  
+}
+
+# =======================END-  WATER PRODUCTION AND DISTRIBUTION =================
+
+
+#  type X08BarGraph{
+#    AvgFlowOfWater:String
+#  }
+
+
+# type X08BarGraphInput{
+#    AvgFlowOfWater:String
+#  }
+
+
+
+
+
+
+# type Mutation {
+#   publishNewData(input: IotDataInput): IotData
+ 
+        
+
+#   ====================START- WATER PRODUCTION AND DISTINCTIONS MUTAION =================
+     #     updateWaterProductionAndDistribution(input: WaterProductionAndDistributionInput): WaterProductionAndDistribution
+#   ====================END- WATER PRODUCTION AND DISTINCTIONS MUTAION =================
+
+
+
+
+   # ================START- PLANT MUTATION=========================
+     #    publishNewDataForPlantAlon(input: IotDataInput): IotData
+
+   # ================END- PLANT MUTATION===========================
+
+
+
+
+  # ================START- SENSOR MUTATION===========================
+#    publishNewDataForSensorPressure(input: IotDataInput): IotData
+#    publishNewDataForSensorFlow(input: IotDataInput): IotData
+#    publishNewDataForSensorConductivity(input: IotDataInput): IotData
+
+  # ================END- SENSOR MUTATION=============================
+
+
+# ================START- PORT MUTATION=============================
+
+#    publishNewDataForPortx08(input: IotDataInput): IotData
+#    publishNewDataForPortx04(input: IotDataInput): IotData
+#    publishNewDataForPortx05(input: IotDataInput): IotData
+#    publishNewDataForPortx07(input: IotDataInput): IotData
+#    publishNewDataForPortx01(input: IotDataInput): IotData
+#    publishNewDataForPortx03(input: IotDataInput): IotData
+
+# ================END-  PORT MUTATION=============================
+
+
+   
+ # ================START- ZONE MUTATION=============================
+
+     # publishNewDataForZoneProduction(input: IotDataInput): IotData
+     # publishNewDataForZoneDistribution(input: IotDataInput): IotData
+     # publishNewDataForZoneSeaIntake(input: IotDataInput): IotData
+     # publishNewDataForZoneFilter1(input: IotDataInput): IotData
+     # publishNewDataForZoneFilter2(input: IotDataInput): IotData
+
+        
+ # ================END- ZONE MUTATION=============================
+   
+# ================START- TANK AND PRESSURE MUTATION=============================
+
+#   updateTankAndPressureDataPerDay(input: UpdateTankAndPressureDataInput):TankAndPressureData
+#   updateTankAndPressureDataPerMinute(input: UpdateTankAndPressureDataInput):TankAndPressureData
+#   updateTankAndPressureDataPerWeek(input: UpdateTankAndPressureDataInput):TankAndPressureData
+#   updateTankAndPressureDataPerMonth(input: UpdateTankAndPressureDataInput):TankAndPressureData
+
+  # ================END- TANK AND PRESSURE MUTATION=============================
+# }
+
+# type Subscription  {
+  
+
+#     onMachineOperationData: MachineOperationData
+     
+
+#     onNewData: IotData
+#     @aws_subscribe(mutations: ["publishNewData"])
+
+    
+
+#   onPublishNewData(interval: String, sensor: String, port: String, zone: String, plant: String): IotData
+#    @aws_subscribe(mutations: ["publishNewData"])
+   
+   
+
+#      onFetchDataa(interval: String, sensor: String, port: String, zone: String, plant: String): IotData
+#    @aws_subscribe(mutations: ["publishNewData"])
+
+     
+
+
+
+
+   #   onX08BarGraph:[X08BarGraph]
+   #    @aws_subscribe(mutations: ["updateX08BarGraph"])
+
+# ===============START- Water Production and Distribution Subscription================================
+        
+          # onFlowWaterProductionAndDistribution: WaterProductionAndDistribution
+          #  @aws_subscribe(mutations: ["updateWaterProductionAndDistribution"])
+  
+
+# ===============END- Water Production and Distribution Subscription================================
+
+
+
+# ================START- PLANT SUBSCRIPTION=============================
+
+#    onPublishNewDataForPlantAlonForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForPlantAlon"])
+
+
+# ================END- PLANT SUBSCRIPTION=============================
+
+
+
+# ================START- SENSOR SUBSCRIPTION=============================
+
+#    onPublishNewDataForSensorPressureForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForSensorPressure"])
+
+#     onPublishNewDataForSensorFlowForMinute: IotData
+#     @aws_subscribe(mutations: ["publishNewDataForSensorFlow"])
+
+#     onPublishNewDataForSensorConductivityForMinute: IotData
+#     @aws_subscribe(mutations: ["publishNewDataForSensorConductivity"])
+
+# ================END- SENSOR SUBSCRIPTION=============================
+
+
+
+# ================START- PORT SUBSCRIPTION=============================
+   
+#     onPublishNewDataForPortX08ForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForPortx08"])
+
+#    onPublishNewDataForPortX04ForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForPortx04"])
+
+#    onPublishNewDataForPortX05ForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForPortx05"])
+
+#    onPublishNewDataForPortX07ForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForPortx07"])
+
+#    onPublishNewDataForPortX01ForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForPortx01"])
+
+#    onPublishNewDataForPortX03ForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForPortx03"])
+
+# ================END-  PORT SUBSCRIPTION=============================
+
+
+
+# ================START- ZONE SUBSCRIPTION=============================
+
+#     onPublishNewDataForZoneProductionForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForZoneProduction"])
+
+#    onPublishNewDataForZoneDistributionForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForZoneDistribution"])
+
+
+#     onPublishNewDataForZoneSeaIntakeForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForZoneSeaIntake"])
+
+
+#    onPublishNewDataForZoneFilter1ForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForZoneFilter1"])
+
+#    onPublishNewDataForZoneFilter2ForMinute: IotData
+#    @aws_subscribe(mutations: ["publishNewDataForZoneFilter2"])
+
+
+# ================END- ZONE SUBSCRIPTION=============================
+
+   
+# ================START- TANK AND PRESSURE SUBSCRIPTION=============================
+
+     #  onTankANdPressureDataForDay: TankAndPressureData
+	# 	 @aws_subscribe(mutations: ["updateTankAndPressureDataPerDay"])
+
+     # onTankANdPressureDataForMinute: TankAndPressureData
+	# 	 @aws_subscribe(mutations: ["updateTankAndPressureDataPerMinute"])
+
+
+     #   onTankANdPressureDataForWeek: TankAndPressureData
+	# 	 @aws_subscribe(mutations: ["updateTankAndPressureDataPerWeek"])
+
+     # onTankANdPressureDataForMonth: TankAndPressureData
+	# 	 @aws_subscribe(mutations: ["updateTankAndPressureDataPerMonth"])
+
+   # ================END- TANK AND PRESSURE SUBSCRIPTION=============================
+  
+# }
+
+
+
